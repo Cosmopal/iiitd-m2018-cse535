@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity_A1_2016064"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registration Page
+Please enter the details and click 'SUBMIT' to register
+Click 'CLEAR' to clear the form"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"/>
+
+    <EditText
+        android:id="@+id/et_rollno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Roll No."/>
+
+    <EditText
+        android:id="@+id/et_branch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Branch"/>
+
+    <EditText
+        android:id="@+id/et_course1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course 1"/>
+
+    <EditText
+        android:id="@+id/et_course2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course 2"/>
+
+    <EditText
+        android:id="@+id/et_course3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course 3"/>
+
+    <EditText
+        android:id="@+id/et_course4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course 4"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:text="SUBMIT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="submit"/>
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:text="CLEAR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clear"/>
+    </LinearLayout>
+
+</LinearLayout>
