@@ -34,6 +34,7 @@ public class BaseActivity_A1_2016064 extends AppCompatActivity {
             s1 = "Stopped";
         }
         stopped = false;
+        paused = false;
         logStateChangeString(s1,"Started");
     }
 
@@ -45,6 +46,7 @@ public class BaseActivity_A1_2016064 extends AppCompatActivity {
             s1 = "Paused";
         }
         paused = false;
+        stopped = false;
         logStateChangeString(s1,"Resumed");
     }
 
@@ -58,6 +60,7 @@ public class BaseActivity_A1_2016064 extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        stopped = true;
         logStateChangeString("Paused","Stopped");
     }
 
@@ -68,7 +71,7 @@ public class BaseActivity_A1_2016064 extends AppCompatActivity {
     }
 
     protected void logStateChangeString(String state1, String state2){
-        String s = "State of Activity" + this.getClass().getSimpleName() +
+        String s = "State of Activity: " + this.getClass().getSimpleName() +
                 " changed from " + state1 + " to " + state2;
         Log.i(StateTAG,s);
         Toast t = Toast.makeText(this,s,Toast.LENGTH_SHORT);
