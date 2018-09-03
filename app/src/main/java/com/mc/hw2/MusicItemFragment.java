@@ -28,6 +28,7 @@ public class MusicItemFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    public MusicItemRecyclerViewAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,7 +70,8 @@ public class MusicItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MusicItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            mAdapter = new MusicItemRecyclerViewAdapter(this.getContext(), mListener);
+            recyclerView.setAdapter(mAdapter);
         }
         return view;
     }
@@ -104,6 +106,7 @@ public class MusicItemFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentItemClick(MusicItem item);
+        MusicItem itemPlaying();
     }
 }
