@@ -1,5 +1,6 @@
 package com.mc.hw3.quizapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -82,7 +83,7 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
         //TODO: Submit list to server.
         Toast.makeText(this, "TODO: Upload files", Toast.LENGTH_SHORT).show();
         createCsv();
-        UploadTask task = new UploadTask();
+        UploadTask task = new UploadTask(this);
         task.execute(serverIp);
 
     }
@@ -121,9 +122,22 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
         return serverIp;
     }
 
-    class UploadTask extends AsyncTask<String, Float ,String>{
+    class UploadTask extends AsyncTask<String, Integer ,String>{
 
         private String TAG = "UploadTask";
+        private ProgressDialog progressDialog;
+
+        public UploadTask(QuestionListActivity questionListActivity){
+            progressDialog = new ProgressDialog(questionListActivity);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Uploading file ... ");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -145,14 +159,15 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
             }
 
             try{
-                int response = uploadFile(file, urlString);
+                return uploadFile(file, urlString);
+                /*int response = uploadFile(file, urlString);
                 if (response == 200){
                     //Upload was successful
                     return "Upload Successful";
                 }
                 else{
-                    return "Upload unsuccessful, check logs";
-                }
+                    return "Upload unsuccessful" + ;
+                }*/
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -167,7 +182,7 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
 //            return "Upload Successful";
         }
 
-        protected int uploadFile(File file, String urlString) throws IOException {
+        protected String uploadFile(File file, String urlString) throws IOException {
             String lineEnd = "\r\n";
             String boundary = "***thisIsBoundary***";
 
@@ -190,16 +205,26 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
                     ";filename=\"" + file.getName() + "\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
 
-            int maxBuff = 1024 * 1024;
+            int maxBuff = 10;
+            int ratio = inputStream.available() / maxBuff;
+            Log.d(TAG,"inputStream.available()" + inputStream.available());
+            Log.d(TAG,"ratio = " + ratio);
             int bufSize = Math.min(maxBuff, inputStream.available());
             byte[] buffer = new byte[bufSize];
             int numBytesRead = inputStream.read(buffer, 0, bufSize);
             int count = 0;
             while (numBytesRead > 0){
+                Log.d(TAG,"progress  = " + count * 100 /ratio);
+                publishProgress(count * 100 / ratio);
                 count++;
                 outputStream.write(buffer);
                 bufSize = Math.min(maxBuff, inputStream.available());
                 numBytesRead = inputStream.read(buffer, 0, bufSize);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             Log.d(TAG, "Uploaded in " + count + " buffers");
 
@@ -216,12 +241,20 @@ public class QuestionListActivity extends AppCompatActivity implements IPDialogF
             outputStream.flush();
             outputStream.close();
 
-            return response;
+            return responseMsg;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            Log.d(TAG, "progress update, progress = " + values[0]);
+            Log.d(TAG, "values = " + values.toString());
+            progressDialog.setProgress(values[0]);
         }
 
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(QuestionListActivity.this, result, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
     }
 
