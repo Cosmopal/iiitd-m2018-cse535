@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/question_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".QuestionDetailFragment">
+
+    <TextView
+        android:id="@+id/question_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/textAppearanceLarge"
+        android:textIsSelectable="true"
+        tools:text="Test Questions Text?"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/true_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="True"/>
+            <!--android:onClick="clickRadioButton"/>-->
+
+        <RadioButton
+            android:id="@+id/false_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="False"/>
+            <!--android:onClick="clickRadioButton"/>-->
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:onClick="save"/>
+
+    </LinearLayout>
+</ScrollView>
